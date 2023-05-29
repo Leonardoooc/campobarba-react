@@ -1,0 +1,41 @@
+html, body, #home {
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+    background: url(../../images/bg.jpg);
+	background-attachment: fixed;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 1rem;
+}
+
+/* Barra de navegação
+-----------------------------*/
+nav.navbar-transparente {
+	padding: 15px 0px;
+	background: rgba(0,0,0,0.6);
+}
+
+.right-items {
+	color: #f7b600;
+}
+
+.navbar-light .navbar-nav .nav-link {
+	color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+	color: #f7b600;
+}
+
+.navbar-light .navbar-toggler {
+    color: rgba(255,255,255,.5);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.divisor {
+	width: 1px;
+	background: white;
+	margin: 12px 15px;
+}
