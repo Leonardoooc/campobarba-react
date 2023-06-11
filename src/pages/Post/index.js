@@ -42,10 +42,10 @@ export default function Post() {
     async function handleUpload(e){
         e.preventDefault();
 
-        if(imagePost === null) {
+        /*if(imagePost === null) {
             toast.error("Você precisa colocar uma imagem no post.")
             return;
-        }
+        }*/
 
         if (title === '') {
             toast.error("Você precisa adicionar um título.")
@@ -61,17 +61,10 @@ export default function Post() {
             toast.error("Você precisa adicionar uma descrição.")
             return;
         }
-    
-        const uploadRef = ref(storage, `images/posts/${imagePost.name}`)
-    
-        const uploadTask = uploadBytes(uploadRef, imagePost)
-        .then((snapshot) =>{
-          
-          getDownloadURL(snapshot.ref).then( async (downloadURL) => {
-            let urlFoto = downloadURL;
-    
+
+        if (imagePost === null) {
             await addDoc(collection(db, "posts"), {
-                postUrl: urlFoto,
+                postUrl: 'https://firebasestorage.googleapis.com/v0/b/tickets-171e6.appspot.com/o/images%2Fposts%2Fbeneficios.jpg?alt=media&token=db52dbf5-2ffc-4d09-8fb3-2e7274e8b392',
                 title: title,
                 subtitle: subtitle,
                 description: description,
@@ -87,10 +80,37 @@ export default function Post() {
                 toast.error("Erro ao enviar post!")
                 console.log(error);
             })
+        } else {
+            const uploadRef = ref(storage, `images/posts/${imagePost.name}`)
     
-          })
-    
-        })
+            const uploadTask = uploadBytes(uploadRef, imagePost)
+            .then((snapshot) =>{
+            
+            getDownloadURL(snapshot.ref).then( async (downloadURL) => {
+                let urlFoto = downloadURL;
+        
+                await addDoc(collection(db, "posts"), {
+                    postUrl: urlFoto,
+                    title: title,
+                    subtitle: subtitle,
+                    description: description,
+                    created: new Date(),
+                })
+                .then(() => {
+                    setDescription('');
+                    setTitle('')
+                    setSubtitle('')
+                    toast.success("Post enviado com sucesso!")
+                })
+                .catch((error) => {
+                    toast.error("Erro ao enviar post!")
+                    console.log(error);
+                })
+        
+            })
+        
+            })
+        }
     
     }
 
